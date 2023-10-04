@@ -9,12 +9,12 @@ string encryptVigenere(const string &message, const string &key) {
     string encryptedMessage;
     int messageLength = message.length();
     int keyLength = key.length();
+    int keyIndex = 0;
 
     for (int i = 0; i < messageLength; i++) {
-
         if (isalpha(message[i])) {
             char messageChar = message[i];
-            char keyChar = key[i % keyLength];
+            char keyChar = key[keyIndex % keyLength];
             char encryptedChar;
 
             char shift = isupper(messageChar) ? 'A' : 'a';
@@ -22,7 +22,9 @@ string encryptVigenere(const string &message, const string &key) {
             encryptedChar = (messageChar + keyChar - 2 * shift) % 26 + shift;
 
             encryptedMessage += encryptedChar;
+            keyIndex++;
         } else {
+            // Se não for uma letra, mantenha o caractere original
             encryptedMessage += message[i];
         }
     }
@@ -35,11 +37,12 @@ string decryptVigenere(const string &message, const string &key) {
     string decryptedMessage;
     int messageLength = message.length();
     int keyLength = key.length();
+    int keyIndex = 0;
 
     for (int i = 0; i < messageLength; i++) {
         if (isalpha(message[i])) {
             char messageChar = message[i];
-            char keyChar = key[i % keyLength];
+            char keyChar = key[keyIndex % keyLength];
             char decryptedChar;
 
             char shift = isupper(messageChar) ? 'A' : 'a';
@@ -47,7 +50,9 @@ string decryptVigenere(const string &message, const string &key) {
             decryptedChar = (messageChar - keyChar + 26) % 26 + shift;
 
             decryptedMessage += decryptedChar;
+            keyIndex++;
         } else {
+            // Se não for uma letra, mantenha o caractere original
             decryptedMessage += message[i];
         }
     }
